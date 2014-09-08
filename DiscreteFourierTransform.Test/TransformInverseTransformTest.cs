@@ -28,7 +28,7 @@ namespace DiscreteFourierTransform.Test
             Assert.AreEqual(inputTimeDomain, outputTimeDomain);        
         }
 
-        [Ignore]
+        
         [TestMethod]
         public void PerformTransformTest()
         {
@@ -44,8 +44,7 @@ namespace DiscreteFourierTransform.Test
 
             Assert.AreEqual(1, frequencyDomainSignal.RealResult[0]);
             Assert.AreEqual(1, frequencyDomainSignal.RealResult[1]);
-            Assert.AreEqual(1, frequencyDomainSignal.RealResult[2]);
-            Assert.AreEqual(1, frequencyDomainSignal.RealResult[3]);
+            Assert.AreEqual(1, frequencyDomainSignal.RealResult[2]);            
         }
 
         [TestMethod]
@@ -60,8 +59,8 @@ namespace DiscreteFourierTransform.Test
             FrequencyDomainSignal frequencyDomainSignal = transform.PerformTransform(inputTimeDomain);
 
             //not sure what is expected yet
-            Assert.AreEqual(1, frequencyDomainSignal.RealResult[0]);
-            Assert.AreEqual(1, frequencyDomainSignal.RealResult[1]);
+            Assert.AreEqual(0, frequencyDomainSignal.RealResult[0]);
+            Assert.AreEqual(0, frequencyDomainSignal.RealResult[1]);            
         }
     }
 }

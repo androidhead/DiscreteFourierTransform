@@ -12,23 +12,23 @@ namespace DiscreteFourierTransform
         {
             FrequencyDomainSignal result = new FrequencyDomainSignal();
             
-            int dataPointCount = timeDomainSignal.Count;
-
             //foreach frequency
-            for(int j=0; j < dataPointCount/2; j++)
+            for (int k = 0; k <= timeDomainSignal.Count / 2; k++)
             {
                 double accumulatedReal = 0;
                 double accumulatedImaginary= 0;
 
-                foreach(int dataPoint in timeDomainSignal)
+                for (int i = 0; i < timeDomainSignal.Count; i++)
                 {
-                    double angle = CalculateCosSinAngle(j, j, dataPointCount);
-                    accumulatedReal += Math.Cos(angle);
-                    accumulatedImaginary += Math.Sin(angle);
+                    double angle = CalculateCosSinAngle(k, i, timeDomainSignal.Count);
+                    accumulatedReal += timeDomainSignal[i] * Math.Cos(angle);                                        
+                    accumulatedImaginary += timeDomainSignal[i] * Math.Sin(angle);                
                 }
 
                 result.RealResult.Add(accumulatedReal);
-                result.ImaginaryResult.Add(accumulatedImaginary);
+                
+                //must negate imaginary
+                result.ImaginaryResult.Add(-accumulatedImaginary);
             }
 
             return result;
@@ -36,9 +36,12 @@ namespace DiscreteFourierTransform
 
 
         //todo: move this to a new class for better separation?
-        public double CalculateCosSinAngle(int frequency, int dataPoint, int dataPointCount)
-        {
-            return -2 * Math.PI * frequency/*k(frequency)*/ * dataPoint/*n (data point number)*/ / dataPointCount /*N (total number of data points)*/;
+        //todo:  could extract @ PI * k / N out for re-use, then just multiply it by i every time
+        public double CalculateCosSinAngle(int frequency, int dataPointPosition, int totalDataPointCount)
+        {            
+            //2 PI*ki/N
+            //
+            return 2 * Math.PI * frequency/*k(frequency)*/ * dataPointPosition/*n (data point number)*/ / totalDataPointCount /*N (total number of data points)*/;
         }
     }
 }
